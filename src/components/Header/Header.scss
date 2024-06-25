@@ -1,0 +1,92 @@
+.header-container {
+    display: flex;
+    padding: 5px 100px;
+    --tw-bg-opacity: 1 !important;
+    background-color: rgb(237 255 250/var(--tw-bg-opacity)) !important;
+    gap: 20px;
+
+    .left-container {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+
+        .logo {
+            width: 60%;
+            cursor: pointer;
+        }
+    }
+
+    .middle-container {
+        display: flex;
+        width: 35%;
+        justify-content: start;
+        align-items: center;
+        gap: 40px;
+
+        .child-content {
+            font-size: 20px;
+            font-family: revert;
+            color: rgb(112, 112, 112);
+            padding: 7px 10px;
+            // border: 1px solid;
+            // border-radius: 10px;
+            // padding: 7px 10px;
+            // background-color: rgb(255, 174, 0);
+            // color: white;
+            cursor: pointer;
+
+            &:hover {
+                border-radius: 10px;
+
+                background-color: rgb(255, 174, 0);
+                color: white;
+            }
+        }
+    }
+
+    .right-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+
+        .search {
+            position: relative;
+            display: inline-block;
+
+            .search-input {
+                width: 100%;
+                padding: 10px;
+                border: 0.5px solid black;
+                border-radius: 10px;
+                font-size: 16px;
+            }
+
+            .search-icon {
+                position: absolute;
+                top: 29%;
+                left: 95%;
+                font-size: 18px;
+
+            }
+        }
+
+        .login {
+            .login-icon {
+                font-size: 18px;
+                border: 1px solid;
+                padding: 9px 14px;
+                border-radius: 10px;
+
+                cursor: pointer;
+
+                &:hover {
+                    background-color: black;
+                    color: white;
+                }
+            }
+        }
+    }
+}
