@@ -7,6 +7,7 @@ import Slide from '@mui/material/Slide';
 import React from 'react';
 import { toast } from 'react-toastify';
 import { putUpdateDoctorSchedule } from '../../../../services/scheduleService';
+import { result } from 'lodash';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -33,12 +34,12 @@ const DeleteDoctorSchedule = (props) => {
         let reult = await putUpdateDoctorSchedule(dataDelete.id, 5,);
 
         if (reult.ER === 0) {
-            toast.success("Xóa Bác Sĩ Thành Công")
+            toast.success(result.message)
             props.handleSearchDoctorSchedule();
             resetData();
         }
         else (
-            toast.error("Xóa Bác Sĩ Thất Bại")
+            toast.error(result.message)
         )
 
     }

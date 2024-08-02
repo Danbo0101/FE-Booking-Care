@@ -25,8 +25,8 @@ const App = () => {
                     <SidebarItem icon={<VaccinesOutlinedIcon size={20} />} text="Specialties" to="specialties" />
                     <hr className="my-3 border-t-2" />
                     <SidebarItem icon={<SettingsOutlinedIcon size={20} />} text="Settings" >
-                        <SidebarItem icon={<AccountBoxOutlinedIcon size={16} />} text="Profile" to='/' />
-                        <SidebarItem icon={<VpnKeyOutlinedIcon size={16} />} text="Change Password" />
+                        <SidebarItem icon={<AccountBoxOutlinedIcon size={16} />} text="Profile" to='profile-admin' />
+                        <SidebarItem icon={<VpnKeyOutlinedIcon size={16} />} text="Change Password" to="change-password" />
                     </SidebarItem>
                 </Sidebar>
             </div>

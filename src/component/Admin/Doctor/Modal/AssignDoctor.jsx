@@ -123,60 +123,62 @@ const AssignDoctor = (props) => {
             TransitionComponent={Transition}
             keepMounted
             onClose={handleClose}
+            fullWidth
+            maxWidth="md"
             aria-describedby="alert-dialog-slide-description"
         >
             <DialogTitle>Gán bác sĩ</DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-slide-description">
-                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel id="demo-simple-select-standard-label">Bác sĩ</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
-                            value={doctor}
-                            onChange={(e) => setDoctor(e.target.value)}
-                            label="Bác sĩ"
-                        >
-                            {optionDoctor.length > 0 && optionDoctor.map((item, index) => {
-                                return (
-                                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
-                                );
-                            })}
-                        </Select>
-                    </FormControl>
-                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel id="demo-simple-select-standard-label">Chuyên khoa</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
-                            value={specialties}
-                            onChange={(e) => setSpecialties(e.target.value)}
-                            label="Chuyên khoa"
-                        >
-                            {optionSpecialties.length > 0 && optionSpecialties.map((item, index) => {
-                                return (
-                                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
-                                );
-                            })}
-                        </Select>
-                    </FormControl>
-                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel id="demo-simple-select-standard-label">Phòng khám</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
-                            value={clinic}
-                            onChange={(e) => setClinic(e.target.value)}
-                            label="Phòng khám"
-                        >
-                            {optionClinic.length > 0 && optionClinic.map((item, index) => {
-                                return (
-                                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
-                                );
-                            })}
-                        </Select>
-                    </FormControl>
-                </DialogContentText>
+            <DialogContent sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-standard-label">Bác sĩ</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        value={doctor}
+                        onChange={(e) => setDoctor(e.target.value)}
+                        label="Bác sĩ"
+                    >
+                        {optionDoctor.length > 0 && optionDoctor.map((item, index) => {
+                            return (
+                                <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+                            );
+                        })}
+                    </Select>
+                </FormControl>
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-standard-label">Chuyên khoa</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        value={specialties}
+                        onChange={(e) => setSpecialties(e.target.value)}
+                        label="Chuyên khoa"
+                    >
+                        {optionSpecialties.length > 0 && optionSpecialties.map((item, index) => {
+                            return (
+                                <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+                            );
+                        })}
+                    </Select>
+                </FormControl>
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 300 }}>
+                    <InputLabel id="demo-simple-select-standard-label">Phòng khám</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        value={clinic}
+                        onChange={(e) => setClinic(e.target.value)}
+                        label="Phòng khám"
+                    >
+                        {optionClinic.length > 0 && optionClinic.map((item, index) => {
+                            return (
+                                <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+                            );
+                        })}
+                    </Select>
+                </FormControl>
+
             </DialogContent>
             <DialogActions>
                 <Button

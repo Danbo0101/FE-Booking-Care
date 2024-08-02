@@ -16,9 +16,32 @@ const deleteCancelBooking = (patientId, bookingId) => {
     return axios.delete(`/v1/api/bookings?patientId=${patientId}&bookingId=${bookingId}`)
 }
 
+const getBookingMonthly = (year) => {
+    return axios.get(`/v1/api/booking-monthly?year=${year}`)
+}
+
+const getBookingClinic = () => {
+    return axios.get(`/v1/api/booking-clinic`)
+}
+
+const getBookingSpecialties = () => {
+    return axios.get(`/v1/api/booking-specialties`)
+}
+
+const postCreatePaymentUrl = (amount, orderId) => {
+    return axios.post(`/v1/api/create_payment_url`, {
+        amount,
+        orderId
+    })
+}
+
 export {
     getBookingToConfirm,
     postBooking,
     getBookingHistory,
-    deleteCancelBooking
+    deleteCancelBooking,
+    getBookingMonthly,
+    getBookingClinic,
+    getBookingSpecialties,
+    postCreatePaymentUrl
 }

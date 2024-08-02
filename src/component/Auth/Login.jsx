@@ -33,8 +33,8 @@ const Login = () => {
                 navigate('/admin');
             } else if (result.data.roleId === 3) {
                 navigate('/')
-            } else {
-                navigate('/')
+            } else if (result.data.roleId === 2) {
+                navigate('/doctor')
             }
         }
         else {

@@ -4,7 +4,7 @@ import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getBookingToConfirm, postBooking } from '../../../services/bookingService';
+import { getBookingToConfirm, postBooking, postCreatePaymentUrl } from '../../../services/bookingService';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -56,13 +56,15 @@ const BookingForm = () => {
 
     const handleSubmitForm = async () => {
 
-        let result = await postBooking(account.id, scheduleId);
-        if (result.ER === 0) {
-            navigate('/booking-success')
+        let result = await postCreatePaymentUrl
 
-        } else {
-            toast.error(result.message)
-        }
+        // let result = await postBooking(account.id, scheduleId);
+        // if (result.ER === 0) {
+        //     navigate('/booking-success')
+
+        // } else {
+        //     toast.error(result.message)
+        // }
 
     }
 
@@ -134,7 +136,7 @@ const BookingForm = () => {
                 />
             </div>
             <div className="mb-4">
-                <input type="radio" name="payment_method" checked className="mr-2" />Thanh toán sau tại cơ sở y tế
+                <input type="radio" name="payment_method" checked className="mr-2" />Thanh toán online
             </div>
             <div className="mb-4">
                 <div className="flex justify-between py-2">

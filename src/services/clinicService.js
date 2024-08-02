@@ -37,6 +37,10 @@ const deleteClinic = (id) => {
     return axios.delete(`/v1/api/clinics?id=${id}`);
 }
 
+const getBookingOfClinic = (clinicId) => {
+    return axios.get(`/v1/api/clinic-booking?clinicId=${clinicId}`)
+}
+
 export {
     getAllClinic,
     getClinicPagination,
@@ -44,5 +48,6 @@ export {
     getClinicInfo,
     putUpdateClinic,
     deleteClinic,
-    getDoctorClinic
+    getDoctorClinic,
+    getBookingOfClinic
 }

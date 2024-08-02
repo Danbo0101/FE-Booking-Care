@@ -1,8 +1,14 @@
 import React from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useLocation } from 'react-router-dom';
 
 
 const BookingSuccess = () => {
+
+    const location = useLocation();
+
+    console.log(location)
+
     return (
         <div className="max-w-xl mx-auto mt-16 p-6 bg-white shadow-md rounded-lg text-center">
             <div className="mb-4">

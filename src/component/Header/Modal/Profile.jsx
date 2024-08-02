@@ -3,9 +3,9 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { useSelector } from 'react-redux';
+import noImage from "../../../assets/images/No_Image_Available.jpg"
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
@@ -34,48 +34,83 @@ const Profile = (props) => {
             keepMounted
             onClose={handleClose}
             fullWidth
-            maxWidth="sm"
+            maxWidth="md"
             aria-describedby="alert-dialog-slide-description"
         >
-            <DialogContent className="p-8 bg-gradient-to-r from-slate-200 via-sky-200 to-blue-300">
-                <div className="text-center mb-8">
-                    {account.image ?
-                        <img
-                            src={bufferToDataURL(account.image)}
-                            alt={`${account.name}'s profile`}
-                            className="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-gray-300"
-                        />
-                        :
-                        <></>
-                    }
+            <DialogContent className="lg:w-[100%] md:w-[80%] sm:w-[88%] xs:w-full mx-auto shadow-2xl p-4 rounded-xl h-fit self-center bg-gradient-to-r from-cyan-100 to-blue-200">
 
-                    <h2 className="text-2xl font-bold">{account.name}</h2>
-                    <p className="text-gray-500">{account.email}</p>
+                <div className="">
+                    <h1
+                        className="lg:text-3xl md:text-2xl sm:text-xl xs:text-xl font-serif font-extrabold mb-2 dark:text-slate-700">
+                        Profile
+                    </h1>
+                    <form>
+                        {account.image ?
+                            <div
+                                className="mx-auto flex justify-center w-[141px] h-[141px] bg-blue-300/20 rounded-full"
+                                style={{
+                                    backgroundImage: `url(${bufferToDataURL(account.image)})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat',
+                                }}>
+                            </div>
+
+                            :
+                            <div
+                                className="mx-auto flex justify-center w-[141px] h-[141px] bg-blue-300/20 rounded-full"
+                                style={{
+                                    backgroundImage: `url(${noImage})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat',
+                                }}>
+                            </div>
+                        }
+                        <h2 className="text-center mt-1 font-semibold dark:text-slate-700">{account.email}
+                        </h2>
+
+                        <div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+                            <div className="w-full  mb-4 mt-6">
+                                <label htmlFor="" className="mb-2 dark:text-slate-700">Họ và Tên</label>
+                                <input type="text"
+                                    className="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-700 dark:border-gray-600 dark:bg-white"
+                                    value={account.name}
+                                    disabled
+                                />
+                            </div>
+                            <div className="w-full  mb-4 lg:mt-6">
+                                <label htmlFor="" className=" dark:text-slate-700">Số điện thoại</label>
+                                <input type="text"
+                                    className="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-700 dark:border-gray-600 dark:bg-white"
+                                    value={account.phone}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+                            <div className="w-full  mb-4 mt-1">
+                                <label htmlFor="" className="mb-2 dark:text-slate-700">Giới tính</label>
+                                <input type="text"
+                                    className="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-700 dark:border-gray-600 dark:bg-white"
+                                    value={account.gender === "male" ? "Nam" : "Nữ"}
+                                    disabled
+                                />
+                            </div>
+                            <div className="w-full  mb-4 lg:mt-1">
+                                <label htmlFor="" className=" dark:text-slate-700">Địa chỉ</label>
+                                <input type="text"
+                                    className="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-700 dark:border-gray-600 dark:bg-white"
+                                    value={account.address}
+                                />
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div className="grid grid-cols-2 gap-10">
-                    <div>
-                        <h3 className="text-sm font-semibold text-gray-500">Tên</h3>
-                        <p className="text-lg font-bold">{account.name}</p>
-                    </div>
-                    <div>
-                        <h3 className="text-sm font-semibold text-gray-500">Giới tính</h3>
-                        <p className="text-lg font-bold">{account.gender}</p>
-                    </div>
-                    <div>
-                        <h3 className="text-sm font-semibold text-gray-500">Email</h3>
-                        <p className="text-lg font-bold">{account.email}</p>
-                    </div>
-                    <div>
-                        <h3 className="text-sm font-semibold text-gray-500">Địa chỉ</h3>
-                        <p className="text-lg font-bold">{account.address}</p>
-                    </div>
-                    <div>
-                        <h3 className="text-sm font-semibold text-gray-500">Số điện thoại</h3>
-                        <p className="text-lg font-bold">{account.phone}</p>
-                    </div>
-                </div>
-            </DialogContent>
-        </Dialog>
+
+
+            </DialogContent >
+        </Dialog >
     )
 }
 

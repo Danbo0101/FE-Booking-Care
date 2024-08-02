@@ -148,16 +148,20 @@ const History = (props) => {
                     </TableBody>
                 </Table>
 
+                {sortedData.length > 0 ?
+                    <div className=' flex items-center justify-center p-8'>
+                        <Pagination
+                            count={pageCount}
+                            variant="outlined"
+                            color="primary"
+                            page={currentPage}
+                            onChange={(e, value) => setCurrentPage(value)}
+                        />
+                    </div>
+                    :
+                    <div className="flex justify-center py-5 text-red-400">Không tìm thấy lịch hẹn</div>
+                }
 
-                <div className=' flex items-center justify-center p-8'>
-                    <Pagination
-                        count={pageCount}
-                        variant="outlined"
-                        color="primary"
-                        page={currentPage}
-                        onChange={(e, value) => setCurrentPage(value)}
-                    />
-                </div>
             </DialogContent>
         </Dialog >
     )

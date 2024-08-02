@@ -5,7 +5,7 @@ import { FETCH_USER_LOGIN_SUCCESS, USER_LOGOUT_SUCCESS } from '../action/userAct
 
 const INITIAL_STATE = {
     account: {
-        id: "",
+        id: null,
         name: "",
         email: "",
         address: "",

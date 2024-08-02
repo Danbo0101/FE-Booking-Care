@@ -25,6 +25,9 @@ import PrivateRoute from './routes/PrivateRoute';
 import { useSelector } from 'react-redux';
 import ForgotPassword from './component/Auth/ForgotPassword';
 import ProfileAdmin from './component/Admin/Profile';
+import ChangePassword from './component/Admin/ChangePassword';
+import HomeDoctor from './component/Doctor/Doctor';
+import Appointment from './component/Doctor/Appointment';
 
 
 
@@ -63,7 +66,7 @@ const Layout = () => {
                         <Route path="booking-success" element={<BookingSuccess />} />
                     </Route>
                 </Route>
-                <Route element={<PrivateRoute allowedRoles={[2, 3]} />}>
+                <Route element={<PrivateRoute allowedRoles={[3]} />}>
                     <Route path="booking-form" element={<BookingForm />} />
                     <Route path="booking-success" element={<BookingSuccess />} />
                 </Route>
@@ -71,10 +74,19 @@ const Layout = () => {
                     <Route element={<Admin />}>
                         <Route index element={<Dashboard />} />
                         <Route path="profile-admin" element={<ProfileAdmin />} />
+                        <Route path="change-password" element={<ChangePassword />} />
                         <Route path="clinic" element={<Clinic />} />
                         <Route path="doctor" element={<Doctor />} />
                         <Route path="specialties" element={<Specialties />} />
                         <Route path="schedule-doctor" element={<ScheduleDoctor />} />
+                    </Route>
+                </Route>
+                <Route path="doctor" element={<PrivateRoute allowedRoles={[2]} />}>
+                    <Route element={<HomeDoctor />}>
+                        <Route index element={<Appointment />} />
+                        <Route path="profile-admin" element={<ProfileAdmin />} />
+                        <Route path="change-password" element={<ChangePassword />} />
+
                     </Route>
                 </Route>
 

@@ -30,6 +30,8 @@ const DoctorInfo = (props) => {
 
     };
 
+    console.log(id);
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");

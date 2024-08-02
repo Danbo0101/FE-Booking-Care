@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
+import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
 import { getDoctorPagination } from '../../../services/doctorService';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
@@ -24,6 +25,7 @@ import DoctorInfo from './Modal/DoctorInfo';
 import AssignDoctor from './Modal/AssignDoctor';
 import DeleteDoctor from './Modal/DeleteDoctor';
 import UpdateDoctor from './Modal/UpdateDoctor';
+import AttendanceDoctor from './Modal/AttendanceDoctor';
 // import DoctorInfo from './Modal/DoctorInfo';
 // import UpdateDoctor from './Modal/UpdateDoctor';
 // import DeleteDoctor from './Modal/DeleteDoctor';
@@ -59,6 +61,8 @@ const Doctor = (props) => {
 
     const [openAssign, setOpenAssign] = useState(false);
 
+    const [openAttendance, setOpenAttendance] = useState(false);
+
     const [openView, setOpenView] = useState(false);
     const [dataView, setDataView] = useState();
 
@@ -91,6 +95,7 @@ const Doctor = (props) => {
     }
 
     const handleViewDoctor = (id) => {
+        console.log(id)
         setOpenView(true);
         setDataView(id);
     }
@@ -107,6 +112,8 @@ const Doctor = (props) => {
             name,
         });
     }
+
+
 
     return (
         <div className="flex flex-col w-full h-full py-10 px-16">
@@ -201,6 +208,12 @@ const Doctor = (props) => {
                     tooltipTitle="Gán Bác sĩ "
                     onClick={() => setOpenAssign(true)}
                 ></SpeedDialAction>
+                <SpeedDialAction
+                    key="assign-doctor"
+                    icon={<WatchLaterOutlinedIcon />}
+                    tooltipTitle="Bác sĩ chưa điểm danh hôm nay"
+                    onClick={() => setOpenAttendance(true)}
+                ></SpeedDialAction>
 
             </SpeedDial>
 
@@ -235,6 +248,11 @@ const Doctor = (props) => {
                 dataDelete={dataDelete}
                 setDataDelete={setDataDelete}
                 fetchListDoctor={fetchListDoctor}
+            />
+            <AttendanceDoctor
+
+                open={openAttendance}
+                setOpen={setOpenAttendance}
             />
 
         </div>

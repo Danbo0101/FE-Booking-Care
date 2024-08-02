@@ -124,7 +124,7 @@ const CreateDoctor = (props) => {
 
         }
         else {
-            toast.error("Thêm Bác Sĩ Thất Bại")
+            toast.error(result.message)
         }
     }
 
@@ -137,7 +137,7 @@ const CreateDoctor = (props) => {
             fullWidth
         >
             <DialogTitle sx={{ m: 0, p: 2, fontSize: "20px", fontWeight: "500" }} id="customized-dialog-title">
-                Tạo mới Phòng khám
+                Tạo mới Bác sĩ
             </DialogTitle>
             <DialogContent dividers>
                 <div className="mx-10 flex flex-col gap-5">

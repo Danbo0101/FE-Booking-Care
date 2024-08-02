@@ -41,6 +41,10 @@ const deleteSpecialties = (id) => {
     return axios.delete(`/v1/api/specialties?id=${id}`);
 }
 
+const getBookingOfSpecialties = (specialtiesId) => {
+    return axios.get(`/v1/api/specialties-booking?specialtiesId=${specialtiesId}`)
+}
+
 export {
     getAllSpecialties,
     getSpecialtiesPagination,
@@ -48,5 +52,6 @@ export {
     putUpdateSpecialties,
     deleteSpecialties,
     getSpecialtiesInfo,
-    getDoctorSpecialties
+    getDoctorSpecialties,
+    getBookingOfSpecialties
 }
