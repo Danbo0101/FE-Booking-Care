@@ -14,7 +14,7 @@ const getAllDoctorNotMarkToday = () => {
 }
 
 const getDoctorInfoDetail = (id) => {
-    return axios.get(`/ v1 / api / doctor - clinic - specialties ? doctorId = ${id}`);
+    return axios.get(`/v1/api/doctor-clinic-specialties?doctorId=${id}`);
 }
 
 const postCreateNewDoctor = (name, email, password, address, gender, phone, qualification, price, doctorImage) => {
@@ -40,7 +40,7 @@ const postAssignDoctor = (doctorId, clinicId, specialtiesId) => {
 }
 
 const deleteDoctor = (id) => {
-    return axios.delete(`/ v1 / api / doctors ? id = ${id}`);
+    return axios.delete(`/v1/api/doctors?id=${id}`);
 }
 
 const putUpdateDoctor = (id, name, email, address, gender, phone, qualification, price, doctorImage) => {
@@ -53,18 +53,18 @@ const putUpdateDoctor = (id, name, email, address, gender, phone, qualification,
     data.append('qualification', qualification);
     data.append('price', price);
     data.append('image', doctorImage);
-    return axios.put(`/ v1 / api / doctors ? id = ${id}`, data);
+    return axios.put(`/v1/api/doctors?id = ${id}`, data);
 }
 
 const getAssignDoctor = (id) => {
-    return axios.get(`/ v1 / api / assign - doctor ? doctorId = ${id}`);
+    return axios.get(`/v1/api/assign-doctor?doctorId=${id}`);
 }
 
 const putUpdateAssignDoctor = (id, clinicId, specialtiesId) => {
     const data = new FormData();
     data.append('clinicId', clinicId);
     data.append('specialtiesId', specialtiesId);
-    return axios.put(`/ v1 / api / assign - doctor ? doctorId = ${id}`, data);
+    return axios.put(`/v1/api/assign-doctor?doctorId=${id}`, data);
 }
 
 

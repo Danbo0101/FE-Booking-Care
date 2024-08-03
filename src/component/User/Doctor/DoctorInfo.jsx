@@ -32,6 +32,7 @@ const DoctorInfo = () => {
 
     const fetchDataDoctorInfo = async () => {
         let resultInfo = await getDoctorInfoDetail(id);
+        console.log(resultInfo)
         if (resultInfo.ER === 0) {
             setDoctorName(resultInfo.data?.doctor?.name);
             setDoctorImage(resultInfo.data?.doctor?.image);
@@ -52,6 +53,18 @@ const DoctorInfo = () => {
         } else {
             setDoctorSchedule(resultSchedule.data);
         }
+    }
+
+    const formatToVND = (amount) => {
+
+        let amountStr = amount.toString();
+        let formattedAmount = '';
+        while (amountStr.length > 3) {
+            formattedAmount = '.' + amountStr.slice(-3) + formattedAmount;
+            amountStr = amountStr.slice(0, amountStr.length - 3);
+        }
+        formattedAmount = amountStr + formattedAmount;
+        return `${formattedAmount} VNĐ`;
     }
 
     useEffect(() => {
@@ -160,7 +173,7 @@ const DoctorInfo = () => {
                     </div>
                     <div className='flex gap-3 mt-6'>
                         <h3 className="text-base text-slate-400 font-semibold mb-2 ">GIÁ KHÁM: </h3>
-                        <p>{doctorPrice}</p>
+                        <p>{formatToVND(doctorPrice)}</p>
                     </div>
                 </div>
 

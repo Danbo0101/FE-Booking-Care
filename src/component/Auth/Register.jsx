@@ -45,6 +45,7 @@ const Register = () => {
             toast.warn(result.message);
         }
     }
+    console.log(inputOTP)
 
     const handleVerifyOTP = async () => {
         let result = await postVerifyOTP(email, OTP);

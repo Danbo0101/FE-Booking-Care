@@ -4,7 +4,7 @@ import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getBookingToConfirm, postBooking, postCreatePaymentUrl } from '../../../services/bookingService';
+import { checkDoctorBooking, checkTimeBooking, getAllBookings, getBookingToConfirm, postBooking, postCreatePaymentUrl } from '../../../services/bookingService';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -16,7 +16,7 @@ const BookingForm = () => {
 
     const account = useSelector(state => state.user.account);
 
-    console.log(account)
+    // console.log(account)
 
     const [doctorName, setDoctorName] = useState('');
     const [doctorImage, setDoctorImage] = useState('');
@@ -27,6 +27,10 @@ const BookingForm = () => {
     const [timeTypeName, setTimeTypeName] = useState('');
     const [qualification, setQualification] = useState('');
     const [price, setPrice] = useState('');
+    const [bookingFee, setBookingFee] = useState('10000');
+    const [totalPrice, setTotalPrice] = useState("");
+    const [paymentMethod, setPaymentMethod] = useState("online");
+    const [orderId, setOrderId] = useState()
 
     const bufferToDataURL = (buffer) => {
         const blob = new Blob([new Uint8Array(buffer.data)], { type: 'image/jpeg' });
@@ -50,22 +54,92 @@ const BookingForm = () => {
             } else {
                 console.log(result.message);
             }
+
+            let allBookings = await getAllBookings();
+            if (allBookings.ER === 0) {
+                console.log(allBookings.data.length)
+                if (allBookings.data.length < 1) {
+                    setOrderId(12)
+                }
+                else {
+                    setOrderId(allBookings.data.id + 12)
+                }
+            }
         }
         fetchDataBooking();
     }, [])
 
+
+    useEffect(() => {
+        calculateTotal();
+    }, [price])
+
+    const formatPrice = (price) => {
+        return parseFloat(price.replace("vnđ", "").replace(/\./g, ""));
+    };
+
+    const calculateTotal = () => {
+        const total = formatPrice(price) + formatPrice(bookingFee);
+        const formattedTotal = total.toLocaleString('vi-VN') + "VNĐ";
+        setTotalPrice(formattedTotal);
+    };
+
     const handleSubmitForm = async () => {
+        let resultTime = await checkTimeBooking(account.id, +scheduleId);
+        if (resultTime.data) {
+            toast.error("Bạn đã đặt lịch trong thời gian này.");
+            return;
+        }
+        let resultDoctor = await checkDoctorBooking(account.id, scheduleId);
+        if (resultDoctor.data) {
+            toast.error("Bạn đã đặt lịch với bác sĩ này trong ngày hôm nay.");
+            return;
+        }
 
-        let result = await postCreatePaymentUrl
+        const newWindow = window.open();
+        if (paymentMethod === "online") {
+            let resultOnline = await postCreatePaymentUrl(formatPrice(totalPrice), orderId, `Thanh toán hoá đơn khám bệnh ${orderId}`)
+            if (resultOnline) {
+                newWindow.location.href = resultOnline;
+                localStorage.setItem("scheduleId", scheduleId);
+                localStorage.setItem("paymentMethod", paymentMethod);
+                localStorage.setItem("bookingFee", formatPrice(price));
+                localStorage.setItem("cosultationFee", formatPrice(bookingFee));
+                localStorage.setItem("totalPrice", formatPrice(totalPrice));
+                setPaymentMethod("online");
+            }
+            else {
+                toast.error(resultOnline);
+            }
+        }
+        else {
+            let resultOffline = await postCreatePaymentUrl(formatPrice(bookingFee), orderId, `Thanh toán đặt lịch ${orderId}`)
+            if (resultOffline) {
+                newWindow.location.href = resultOffline;
+                localStorage.setItem("scheduleId", scheduleId);
+                localStorage.setItem("paymentMethod", paymentMethod);
+                localStorage.setItem("bookingFee", formatPrice(price));
+                localStorage.setItem("cosultationFee", formatPrice(bookingFee));
+                localStorage.setItem("totalPrice", formatPrice(totalPrice));
+                setPaymentMethod("online");
+            }
+            else {
+                toast.error(resultOffline);
+            }
+        }
 
-        // let result = await postBooking(account.id, scheduleId);
-        // if (result.ER === 0) {
-        //     navigate('/booking-success')
+    }
 
-        // } else {
-        //     toast.error(result.message)
-        // }
+    const formatToVND = (amount) => {
 
+        let amountStr = amount.toString();
+        let formattedAmount = '';
+        while (amountStr.length > 3) {
+            formattedAmount = '.' + amountStr.slice(-3) + formattedAmount;
+            amountStr = amountStr.slice(0, amountStr.length - 3);
+        }
+        formattedAmount = amountStr + formattedAmount;
+        return `${formattedAmount} VNĐ`;
     }
 
     return (
@@ -135,21 +209,42 @@ const BookingForm = () => {
                     className="w-full px-4 py-2 border rounded-md focus:outline-none"
                 />
             </div>
-            <div className="mb-4">
-                <input type="radio" name="payment_method" checked className="mr-2" />Thanh toán online
+            <div>
+                <div className="mb-4">
+                    <input
+                        type="radio"
+                        name="payment_method"
+                        value="online"
+                        checked={paymentMethod === "online"}
+                        onChange={() => setPaymentMethod(event.target.value)}
+                        className="mr-2"
+                    />
+                    <label>Thanh toán online</label>
+                </div>
+                <div className="mb-4">
+                    <input
+                        type="radio"
+                        name="payment_method"
+                        value="offline"
+                        checked={paymentMethod === "offline"}
+                        onChange={() => setPaymentMethod(event.target.value)}
+                        className="mr-2"
+                    />
+                    <label>Thanh toán tại bệnh viện</label>
+                </div>
             </div>
             <div className="mb-4">
                 <div className="flex justify-between py-2">
                     <span>Giá khám</span>
-                    <span>{price}</span>
+                    <span>{formatToVND(price)}</span>
                 </div>
                 <div className="flex justify-between py-2">
                     <span>Phí đặt lịch</span>
-                    <span>Miễn phí</span>
+                    <span>{formatToVND(bookingFee)}</span>
                 </div>
                 <div className="flex justify-between py-2 font-bold">
                     <span>Tổng cộng</span>
-                    <span>{price}</span>
+                    <span>{totalPrice}</span>
                 </div>
             </div>
             <div className="mb-4 bg-blue-100 p-4 rounded-lg">

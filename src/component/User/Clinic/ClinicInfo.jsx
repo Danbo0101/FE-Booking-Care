@@ -45,6 +45,7 @@ const ClinicInfo = (props) => {
 
         let resultDoctor = await getDoctorClinic(id);
         if (resultDoctor.ER === 0) {
+            console.log(resultDoctor)
             setListDoctor(resultDoctor.data);
         }
         else { console.log(resultDoctor.message) };
@@ -66,7 +67,7 @@ const ClinicInfo = (props) => {
     const pageCount = Math.ceil(listDoctor.length / itemsPerPage);
     const currentData = listDoctor.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-
+    console.log(listDoctor)
 
     return (
         <>

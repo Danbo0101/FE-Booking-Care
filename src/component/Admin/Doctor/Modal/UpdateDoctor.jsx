@@ -241,6 +241,8 @@ const UpdateDoctor = (props) => {
         }
     }
 
+    console.log(optionClinic);
+
     return (
         <BootstrapDialog
             onClose={handleClose}
