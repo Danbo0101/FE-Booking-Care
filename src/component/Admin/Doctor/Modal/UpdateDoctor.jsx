@@ -85,19 +85,7 @@ const UpdateDoctor = (props) => {
         return PhonePattern.test(phoneNumber);
     }
 
-    const convertToVND = (amount) => {
-        if (typeof amount === 'number') {
-            return amount * 1000 + ' VND';
-        } else if (typeof amount === 'string') {
-            if (amount.slice(-3) === 'VND') {
-                return amount;
-            } else {
-                return amount + '000 VND';
-            }
-        } else {
-            return 'Invalid input';
-        }
-    }
+
 
     const resetData = () => {
         setName("");
@@ -216,7 +204,8 @@ const UpdateDoctor = (props) => {
                     toast.warn("Không được bỏ trống giá khám")
                     return;
                 }
-                let resultInfo = await putUpdateDoctor(dataUpdate.id, name, email, address, gender, phone, qualification, convertToVND(price), image);
+
+                let resultInfo = await putUpdateDoctor(dataUpdate.id, name, email, address, gender, phone, qualification, price, image);
                 if (resultInfo.ER === 0) {
                     toast.success("Sửa thông tin Bác Sĩ Thành Công");
                     props.fetchListDoctor();

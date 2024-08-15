@@ -53,7 +53,7 @@ const putUpdateDoctor = (id, name, email, address, gender, phone, qualification,
     data.append('qualification', qualification);
     data.append('price', price);
     data.append('image', doctorImage);
-    return axios.put(`/v1/api/doctors?id = ${id}`, data);
+    return axios.put(`/v1/api/doctors?id=${id}`, data);
 }
 
 const getAssignDoctor = (id) => {

@@ -24,7 +24,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const History = (props) => {
     const { open } = props;
 
-    const printRef = useRef();
+    const printRefs = useRef([]);
+
+
 
     const handleClose = () => {
         props.setOpen(false);
@@ -106,86 +108,97 @@ const History = (props) => {
     const handlePrint = (printContent) => {
         const printWindow = window.open('', '_blank');
 
-        printWindow.document.write('<html><head><title>Print</title>');
-        printWindow.document.write(`
-        <style>
-            @media print {
-                body { 
-                    font-family: Arial, sans-serif; 
-                    margin: 0; 
-                    padding: 0; 
+        const htmlTemplate = `
+        <html>
+        <head>
+            <title>Print</title>
+            <style>
+                @media print {
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .print-container {
+                        max-width: 100%;
+                        margin: 20px auto;
+                        padding: 20px;
+                        background-color: #fff;
+                        border-radius: 8px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    }
+                    h2 {
+                        font-size: 24px;
+                        font-weight: 800;
+                        color: #1a202c;
+                        text-align: center;
+                        margin-bottom: 24px;
+                    }
+                    .mb-6 {
+                        margin-bottom: 24px;
+                    }
+                    .font-semibold {
+                        font-weight: 600;
+                    }
+                    .text-gray-700 {
+                        color: #4a5568;
+                    }
+                    .text-gray-600 {
+                        color: #718096;
+                    }
+                    .text-base {
+                        font-size: 16px;
+                    }
+                    .text-lg {
+                        font-size: 18px;
+                    }
+                    .block {
+                        display: block;
+                    }
+                    .mt-1 {
+                        margin-top: 8px;
+                    }
+                    table {
+                        border-collapse: collapse;
+                        width: 100%;
+                        margin-top: 1rem;
+                    }
+                    th, td {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        text-align: left;
+                    }
+                    th {
+                        background-color: #f9f9f9;
+                    }
+                    .text-center {
+                        text-align: center !important;
+                    }
                 }
-                .print-container { 
-                    max-width: 100%; 
-                    margin: 20px auto; 
-                    padding: 20px; 
-                    background-color: #fff; 
-                    border-radius: 8px; 
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-                }
-                h2 { 
-                    font-size: 24px; 
-                    font-weight: 800; 
-                    color: #1a202c; 
-                    text-align: center; 
-                    margin-bottom: 24px; 
-                }
-                .mb-6 { 
-                    margin-bottom: 24px; 
-                }
-                .font-semibold { 
-                    font-weight: 600; 
-                }
-                .text-gray-700 { 
-                    color: #4a5568; 
-                }
-                .text-gray-600 { 
-                    color: #718096; 
-                }
-                .text-base { 
-                    font-size: 16px; 
-                }
-                .text-lg { 
-                    font-size: 18px; 
-                }
-                .block { 
-                    display: block; 
-                }
-                .mt-1 { 
-                    margin-top: 8px; 
-                }
-                table { 
-                    border-collapse: collapse; 
-                    width: 100%; 
-                    margin-top: 1rem; 
-                }
-                th, td { 
-                    border: 1px solid #ddd; 
-                    padding: 8px; 
-                    text-align: left; 
-                }
-                th { 
-                    background-color: #f9f9f9; 
-                }
-                .text-center { 
-                    text-align: center !important; 
-                }
-            }
-        </style>
-    `);
-        printWindow.document.write('</head><body>');
-        printWindow.document.write('<div class="print-container">');
-        printWindow.document.write(printContent);
-        printWindow.document.write('</div>');
-        printWindow.document.write('</body></html>');
+            </style>
+        </head>
+        <body>
+            <div class="print-container">
+                ${printContent}
+            </div>
+        </body>
+        </html>
+    `;
+
+        printWindow.document.open();
+        printWindow.document.write(htmlTemplate);
         printWindow.document.close();
 
         printWindow.onload = () => {
             printWindow.print();
+            printWindow.close();
         };
     };
 
 
+    if (!printRefs.current.length) {
+        printRefs.current = sortedData.map(() => React.createRef());
+    }
 
 
     return (
@@ -246,12 +259,16 @@ const History = (props) => {
                                 </TableCell>
                                 <TableCell align="center">
                                     <IconButton
-                                        onClick={() => handlePrint(printRef.current.innerHTML)}
+                                        onClick={() => handlePrint(printRefs.current[index].current.innerHTML)}
                                         className="text-blue-500 hover:text-blue-700"
+                                        disabled={new Date() > new Date(booking.date.split('/').reverse().join('-')) || booking.statusName === "Bị huỷ" || booking.statusName === "Đã hủy"}
                                     >
                                         <LocalPrintshopOutlinedIcon />
                                     </IconButton>
-                                    <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-8 mt-4" ref={printRef} hidden>
+                                    <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-8 mt-4"
+                                        ref={printRefs.current[index]}
+                                        hidden
+                                    >
                                         <h2 className="text-3xl font-extrabold mb-6 text-center text-gray-800">Hoá Đơn Dịch Vụ Khám Bệnh</h2>
 
                                         <div className="mb-6">
@@ -291,7 +308,7 @@ const History = (props) => {
 
                                         <div className="mb-6">
                                             <label className="block font-semibold text-gray-700 text-lg">Phí đặt lịch:</label>
-                                            <span className="block mt-1 text-gray-600 text-base">{formatToVND(booking.bookingFee)}</span>
+                                            <span className="block mt-1 text-gray-600 text-base">{booking.bookingFee === "Chưa thanh toán" ? "Chưa thanh toán" : formatToVND(booking.bookingFee)}</span>
                                         </div>
 
                                         <div className="mb-6">

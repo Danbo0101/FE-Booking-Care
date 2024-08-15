@@ -30,13 +30,27 @@ const BookingForm = () => {
     const [bookingFee, setBookingFee] = useState('10000');
     const [totalPrice, setTotalPrice] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("online");
-    const [orderId, setOrderId] = useState()
+    const [orderId, setOrderId] = useState();
+    const [usedNumbers, setUsedNumbers] = useState([]);
 
     const bufferToDataURL = (buffer) => {
         const blob = new Blob([new Uint8Array(buffer.data)], { type: 'image/jpeg' });
         const url = URL.createObjectURL(blob);
         return url;
     }
+
+    const generateUniqueNumber = (usedNumbers, rangeStart, rangeEnd) => {
+        if (rangeEnd - rangeStart + 1 <= usedNumbers.length) {
+            throw new Error("Error");
+        }
+
+        let number;
+        do {
+            number = Math.floor(Math.random() * (rangeEnd - rangeStart + 1)) + rangeStart;
+        } while (usedNumbers.includes(number));
+
+        return number;
+    };
 
     useEffect(() => {
         const fetchDataBooking = async () => {
@@ -57,18 +71,15 @@ const BookingForm = () => {
 
             let allBookings = await getAllBookings();
             if (allBookings.ER === 0) {
-                console.log(allBookings.data.length)
-                if (allBookings.data.length < 1) {
-                    setOrderId(12)
-                }
-                else {
-                    setOrderId(allBookings.data.id + 12)
-                }
+                // console.log(allBookings.data.length)
+                const newNumber = generateUniqueNumber(usedNumbers, 20, 100);
+                setOrderId(newNumber);
+                setUsedNumbers([...usedNumbers, newNumber]);
+
             }
         }
         fetchDataBooking();
     }, [])
-
 
     useEffect(() => {
         calculateTotal();
@@ -86,12 +97,14 @@ const BookingForm = () => {
 
     const handleSubmitForm = async () => {
         let resultTime = await checkTimeBooking(account.id, +scheduleId);
-        if (resultTime.data) {
+
+        if (resultTime === true) {
             toast.error("Bạn đã đặt lịch trong thời gian này.");
             return;
         }
         let resultDoctor = await checkDoctorBooking(account.id, scheduleId);
-        if (resultDoctor.data) {
+
+        if (resultDoctor === true) {
             toast.error("Bạn đã đặt lịch với bác sĩ này trong ngày hôm nay.");
             return;
         }

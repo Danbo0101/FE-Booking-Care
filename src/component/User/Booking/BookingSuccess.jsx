@@ -33,14 +33,11 @@ const BookingSuccess = () => {
             console.log(result);
         }
         setTimeout(() => {
-
             localStorage.removeItem("scheduleId");
             localStorage.removeItem("paymentMethod");
             localStorage.removeItem("bookingFee");
             localStorage.removeItem("consultationFee");
             localStorage.removeItem("totalPrice");
-
-
             window.location.href = "/";
         }, 5000);
     }

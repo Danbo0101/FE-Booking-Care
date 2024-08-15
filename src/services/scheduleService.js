@@ -24,11 +24,12 @@ const getTimeType = () => {
     return axios.get(`/v1/api/time-type`);
 }
 
-const postCreateDoctorSchedule = (doctoId, timeTypeId, date, maxNumber) => {
+const postCreateDoctorSchedule = (doctoId, timeTypeId, date, maxNumber, bookedNumber) => {
     return axios.post(`/v1/api/schedules?doctorId=${doctoId}`, {
         timeTypeId,
         date,
-        maxNumber
+        maxNumber,
+        bookedNumber
     });
 }
 

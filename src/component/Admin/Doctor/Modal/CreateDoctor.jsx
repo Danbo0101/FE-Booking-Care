@@ -44,6 +44,7 @@ const CreateDoctor = (props) => {
     const [previewImage, setPreviewImage] = useState("");
 
 
+
     const handleUploadImage = (event) => {
         if (event.target && event.target.files && event.target.files[0]) {
             setNameImage(event.target.files[0].name);
@@ -70,6 +71,7 @@ const CreateDoctor = (props) => {
         setImage("");
         setNameImage("");
         setPreviewImage("");
+
         props.setOpen(false);
     }
 

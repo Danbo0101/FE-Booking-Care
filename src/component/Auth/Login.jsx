@@ -24,7 +24,6 @@ const Login = () => {
             toast('Vui lòng nhập mật khẩu');
             return;
         }
-
         let result = await postLogin(email, password);
         if (result.ER === 0) {
             dispatch(doLogin(result.data));
@@ -56,10 +55,8 @@ const Login = () => {
                         <img src={logo}
                             className="w-mx-auto cursor-pointer"
                             onClick={() => navigate('/')}
-
                         />
                     </div>
-
                     <div className="flex flex-col items-center ">
                         <div className="w-full flex-1">
                             <h1 className=" text-2xl xl:text-3xl font-extrabold text-center my-8">

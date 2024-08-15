@@ -63,6 +63,7 @@ const CreateDoctorSchedule = (props) => {
 
     const resetData = () => {
         setDoctorSelected("");
+        setNumberBooked("");
         setDateSelected(dayjs().add(1, 'day'));
         setMaxNumber("");
         setChecked([]);
@@ -75,6 +76,7 @@ const CreateDoctorSchedule = (props) => {
     const [optionDoctor, setOptionDoctor] = useState({});
     const [dateSelected, setDateSelected] = useState(dayjs().add(1, 'day'));
     const [maxNumber, setMaxNumber] = useState("");
+    const [numberBooked, setNumberBooked] = useState("");
 
     const [checked, setChecked] = useState([]);
     const [left, setLeft] = useState([]);
@@ -253,7 +255,7 @@ const CreateDoctorSchedule = (props) => {
         try {
             const results = await Promise.allSettled(
                 right.map(item => {
-                    return postCreateDoctorSchedule(+doctorSelected, item.id, formattedDate, maxNumber);
+                    return postCreateDoctorSchedule(+doctorSelected, item.id, formattedDate, maxNumber, numberBooked);
                 })
             );
 
@@ -300,7 +302,7 @@ const CreateDoctorSchedule = (props) => {
                 Tạo mới lịch làm
             </DialogTitle>
             <DialogContent dividers>
-                <div className='flex  mb-10 gap-2'>
+                <div className='flex  mb-1 gap-2'>
                     <Box sx={{ minWidth: 120, width: "300px", marginTop: "auto", marginLeft: "20px" }}>
                         <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">Bác Sĩ</InputLabel>
@@ -335,7 +337,18 @@ const CreateDoctorSchedule = (props) => {
                         value={maxNumber}
                         onChange={(e) => setMaxNumber(e.target.value)}
                     />
+
                 </div>
+                <div className='flex items-center justify-center py-10'>
+                    <input
+                        className="w-1/2 px-8 h-14 mt-auto rounded-lg font-mediu border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                        type="text"
+                        placeholder="Số lượng bệnh nhân đặt lịch trước"
+                        value={numberBooked}
+                        onChange={(e) => setNumberBooked(e.target.value)}
+                    />
+                </div>
+
                 <Grid container spacing={2} justifyContent="center" alignItems="center">
                     <Grid item>{customList('Chọn ca làm', left)}</Grid>
                     <Grid item>

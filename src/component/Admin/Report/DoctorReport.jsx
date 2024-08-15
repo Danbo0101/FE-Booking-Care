@@ -290,17 +290,17 @@ const DoctorReport = (props) => {
                         Báo cáo đặt lịch của bác sĩ
                     </div>
                     <div className="mx-10 my-5 flex flex-col gap-10">
+                        <div className="px-40 flex flex-col gap-2 items-center">
+                            <label htmlFor="username">Tên bác sĩ</label>
+                            <input
+                                className="w-full px-8 py-3 text-center rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                                type="text"
+                                placeholder=""
+                                value={getNameById(doctorSelected)}
+                                disabled
+                            />
+                        </div>
                         <div className='w-full flex gap-14 justify-center'>
-                            <div className="flex flex-col gap-2 items-center">
-                                <label htmlFor="username">Tên bác sĩ</label>
-                                <input
-                                    className="w-full px-8 py-3 text-center rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                                    type="text"
-                                    placeholder=""
-                                    value={getNameById(doctorSelected)}
-                                    disabled
-                                />
-                            </div>
                             <div className="flex flex-col gap-2 items-center">
                                 <label htmlFor="password">Thời gian</label>
                                 <input
